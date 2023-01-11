@@ -1,0 +1,22 @@
+<?php
+
+// Connection à la base de données
+$db = new mysqli('mysql:host=localhost', 'gsb_user', 'password', 'dbname=gsb_frais');
+
+// Récupération de l'ID de la fiche à changer et de l'état souhaité
+$id = $_POST['id'];
+$new_state = $_POST['new_state'];
+
+// Préparation de la requête SQL
+$stmt = $db->prepare("UPDATE fiches SET etat = ? WHERE id = ?");
+
+// Liaison des variables à la requête préparée
+$stmt->bind_param('si', $new_state, $id);
+
+// Exécution de la requête
+$stmt->execute();
+
+// Redirection vers la page de gestion des fiches
+header('Location: gestion_fiches.php');
+
+?>
